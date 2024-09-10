@@ -52,6 +52,7 @@ urlpatterns = [
 - Melakukan deployment di Pacil Web Service (PWS)
 
 ## Alur Bagan Django
+![image](https://github.com/user-attachments/assets/fd1b4282-2015-4b7a-a91d-dcb4c88a6b21)
 Alur kerja Django dimulai ketika client mengirimkan request ke server. Request ini pertama kali diproses oleh `urls.py`, yang bertugas mencocokkan URL yang diminta dengan pola yang sesuai. Setelah pola URL ditemukan, request diteruskan ke `views.py`, yang menangani logika sesuai dengan permintaan tersebut.
 
 Di dalam `views.py`, jika diperlukan, akan ada interaksi dengan models.py untuk operasi read or write data. Selain itu, `views.py` juga memproses data yang diperoleh dan kemudian menggunakan `templates` untuk merender halaman HTML atau memberikan respons lain yang sesuai.

@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class keyboard(models.Model):
+class Keyboard(models.Model):
     name = models.CharField(max_length=100)
     price = models.IntegerField()
     description = models.TextField()
@@ -13,7 +13,7 @@ class keyboard(models.Model):
     def __str__(self):
         return self.name
     
-class mouse(models.Model):
+class Mouse(models.Model):
     name = models.CharField(max_length=100)
     price = models.IntegerField()
     description = models.TextField()

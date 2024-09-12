@@ -1,10 +1,10 @@
 from django.forms import ModelForm
-from main.models import keyboard, mouse
+from main.models import Keyboard, Mouse
 
 
 class KeyboardForm(ModelForm):
     class Meta:
-        model = keyboard
+        model = Keyboard
         fields = ["name", "price", "description", "stock", "switch", "brand", "image"]
         labels = {
             "name": "Name",
@@ -18,7 +18,7 @@ class KeyboardForm(ModelForm):
 
 class MouseForm(ModelForm):
     class Meta:
-        model = mouse
+        model = Mouse
         fields = ["name", "price", "description", "stock", "dpi", "weight", "brand", "image"]
         labels = {
             "name": "Name",

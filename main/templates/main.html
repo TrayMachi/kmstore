@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block meta %}
+{% extends 'base.html' %} {% load widget_tweaks %} {% block meta %}
 <title>KMStore</title>
 {% endblock meta %} {% block content %}
 <main class="min-h-screen">
@@ -28,64 +28,77 @@
     </div>
   </section>
   {% if not mouse %}
-  <h2 class="text-center my-4 font-bold">Belum ada mouse</h2>
+  <h2 class="text-center my-4 font-bold text-4xl">Belum ada mouse</h2>
   {% else %}
-  <section class="flex items-center justify-center min-h-[90vh]">
-    <div class="bg-[#fbfbfb] shadow-lg p-4 rounded-lg flex flex-col gap-4">
+  <section class="flex items-center justify-center min-h-screen mx-[10vw]">
+    <div class="flex flex-col gap-4">
       <h1 class="text-4xl font-bold text-center">Mouse</h1>
-      <table class="w-full">
-        <thead>
-          <tr>
-            <th class="border border-gray-300">Brand</th>
-            <th class="border border-gray-300">Model</th>
-            <th class="border border-gray-300">Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for m in mouse %}
-          <tr>
-            <td class="border border-gray-300">{{ m.name }}</td>
-            <td class="border border-gray-300">{{ m.brand }}</td>
-            <td class="border border-gray-300">{{ m.dpi }}</td>
-            <td class="border border-gray-300">{{ m.price }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <div
+        class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-2 gap-x-3 gap-y-4"
+      >
+        {% for m in mouse %}
+        <div
+          class="p-4 rounded-lg w-[300px] flex flex-col gap-3 justify-center bg-[#fbfbfb] shadow-lg"
+        >
+          <img
+            width="200px"
+            src="{{ m.image }}"
+            class="mx-auto"
+            alt="{{ m.name }}"
+          />
+          <h2 class="text-xl font-bold text-center">{{ m.name }}</h2>
+          <p>{{ m.description }}</p>
+          <div class="grid grid-cols-2">
+            <h2 class="font-bold">Brand</h2>
+            <p>: {{ m.brand }}</p>
+            <h2 class="font-bold">DPI</h2>
+            <p>: {{ m.dpi }}</p>
+            <h2 class="font-bold">Weight</h2>
+            <p>: {{ m.weight }}g</p>
+            <h2 class="font-bold">Stock</h2>
+            <p>: {{ m.stock }}</p>
+            <h2 class="font-bold">Price</h2>
+            <p>: {{ m.price }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
   </section>
   {% endif %} {% if not keyboards %}
-  <h2 class="text-center my-4 font-bold">Belum ada keyboard</h2>
+  <h2 class="text-center my-4 font-bold text-4xl">Belum ada keyboard</h2>
   {% else %}
-  <section class="flex items-center justify-center min-h-screen">
-    <div class="bg-[#fbfbfb] shadow-lg p-4 rounded-lg flex flex-col gap-4">
+  <section class="flex items-center justify-center min-h-screen mx-[10vw]">
+    <div class="flex flex-col gap-4">
       <h1 class="text-4xl font-bold text-center">Keyboard</h1>
-      <table class="w-[90vw]">
-        <thead>
-          <tr>
-            <th class="border border-gray-300">Image</th>
-            <th class="border border-gray-300">Name</th>
-            <th class="border border-gray-300">Description</th>
-            <th class="border border-gray-300">Brand</th>
-            <th class="border border-gray-300">Switch</th>
-            <th class="border border-gray-300">Stock</th>
-            <th class="border border-gray-300">Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for k in keyboards %}
-          <tr class="text-center">
-            <td class="border border-gray-300 w-[200px] h-[200px]"><img src="{{ k.image }}" /></td>
-            <td class="border border-gray-300">{{ k.name }}</td>
-            <td class="border border-gray-300">{{ k.description }}</td>
-            <td class="border border-gray-300">{{ k.brand }}</td>
-            <td class="border border-gray-300">{{ k.switch }}</td>
-            <td class="border border-gray-300">{{ k.stock }}</td>
-            <td class="border border-gray-300">{{ k.price }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <div
+        class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-2 gap-x-3 gap-y-4"
+      >
+        {% for k in keyboards %}
+        <div
+          class="p-4 rounded-lg w-[300px] flex flex-col gap-3 justify-center bg-[#fbfbfb] shadow-lg"
+        >
+          <img
+            width="200px"
+            src="{{ k.image }}"
+            class="mx-auto"
+            alt="{{ k.name }}"
+          />
+          <h2 class="text-xl font-bold text-center">{{ k.name }}</h2>
+          <p>{{ k.description }}</p>
+          <div class="grid grid-cols-2">
+            <h2 class="font-bold">Brand</h2>
+            <p>: {{ k.brand }}</p>
+            <h2 class="font-bold">Switch</h2>
+            <p>: {{ k.switch }}</p>
+            <h2 class="font-bold">Stock</h2>
+            <p>: {{ k.stock }}</p>
+            <h2 class="font-bold">Price</h2>
+            <p>: {{ k.price }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
   </section>
   {% endif %}

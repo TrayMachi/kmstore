@@ -5,7 +5,7 @@ from main.models import Keyboard, Mouse
 class KeyboardForm(ModelForm):
     class Meta:
         model = Keyboard
-        fields = ["name", "price", "description", "stock", "switch", "brand", "image"]
+        fields = ["name", "price", "stock", "switch", "brand", "image", "description"]
         labels = {
             "name": "Name",
             "price": "Price",
@@ -19,7 +19,7 @@ class KeyboardForm(ModelForm):
 class MouseForm(ModelForm):
     class Meta:
         model = Mouse
-        fields = ["name", "price", "description", "stock", "dpi", "weight", "brand", "image"]
+        fields = ["name", "price", "stock", "dpi", "weight", "brand", "image", "description"]
         labels = {
             "name": "Name",
             "price": "Price",

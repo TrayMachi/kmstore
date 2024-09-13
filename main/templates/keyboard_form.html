@@ -1,19 +1,33 @@
 {% extends 'base.html' %} {% block meta %}
 <title>KMStore | Add Keyboard</title>
 {% endblock meta %} {% block content %}
-<h1>Add New Keyboard to Sell</h1>
+<main class="flex items-center justify-center min-h-screen">
+  <section
+    class="bg-[#f3f3f3] p-4 rounded-[20px] shadow-lg flex flex-col gap-5 items-center justify-center"
+  >
+    <h1 class="font-bold text-[24px]">Add New Keyboard to Sell</h1>
 
-<form method="POST">
-  {% csrf_token %}
-  <table>
-    {{ form.as_table }}
-    <tr>
-      <td></td>
-      <td>
-        <input type="submit" value="Add Keyboard" />
-      </td>
-    </tr>
-  </table>
-</form>
+    <form method="POST" class="flex flex-col gap-5">
+      {% csrf_token %}
+      <div class="grid grid-cols-2 gap-4">
+        {% for field in form %}
+        <div class="flex flex-col gap-2 {% if field.name == 'description' %}col-span-2 items-center{% endif %}">
+          <label for="{{ field.id_for_label }}" class="font-bold"
+            >{{ field.label }}</label
+          >
+          <div>{{ field }}</div>
+        </div>
+        {% endfor %}
+      </div>
+      <button
+        class="p-2 bg-[#424769] hover:bg-[#474F7A] transition-all rounded-[12px] hover:shadow-lg text-white"
+        type="submit"
+        value="Add Keyboard"
+      >
+        Add Keyboard
+      </button>
+    </form>
+  </section>
+</main>
 
 {% endblock %}

@@ -164,11 +164,14 @@ path('xml/keyboard/<str:id>/', show_xml_by_id_keyboard, name='show_xml_by_id_key
 ```http
   GET /json/keyboard
 ```
+![image](https://github.com/user-attachments/assets/ad16ca9a-f9c9-41bb-a330-e4fe34d30c52)
+
 #### Get all keyboard items XML promise
 
 ```http
   GET /json/keyboard
 ```
+![image](https://github.com/user-attachments/assets/2a3ffb77-0ad5-43d8-a609-b3914de6775b)
 
 
 #### Get item by id JSON promise
@@ -181,6 +184,7 @@ path('xml/keyboard/<str:id>/', show_xml_by_id_keyboard, name='show_xml_by_id_key
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of item to fetch |
 
+![image](https://github.com/user-attachments/assets/283e1358-aeaa-4598-b0d7-9e6a7a4c120d)
 
 
 #### Get item by id XML promise
@@ -193,6 +197,7 @@ path('xml/keyboard/<str:id>/', show_xml_by_id_keyboard, name='show_xml_by_id_key
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of item to fetch |
 
+![image](https://github.com/user-attachments/assets/823e8df6-bbcf-420a-b6af-0d0d0e6e5596)
 
 
 

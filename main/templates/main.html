@@ -5,7 +5,15 @@
   <header
     class="bg-purple-500 text-white py-4 px-8 flex justify-between shadow-lg"
   >
-    <h1 class="text-2xl font-bold">{{ title }}</h1>
+    <div class="flex gap-2 items-center">
+      <h1 class="text-2xl font-bold">{{ title }}</h1>
+      <a
+        href="{% url 'main:logout' %}"
+        class="bg-red-500 hover:bg-red-700 transition-all hover:shadow-md text-white font-bold py-2 px-4 rounded"
+      >
+        <button>Logout</button>
+      </a>
+    </div>
     <div class="flex gap-4">
       <p class="text-lg font-bold">{{ name }}</p>
       <p class="text-lg font-bold">{{ npm }}</p>

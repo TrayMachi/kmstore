@@ -14,6 +14,9 @@ from main.views import (
     register,
     login_user,
     logout_user,
+    show_json_by_author,
+    delete_keyboard,
+    delete_mouse,
 )
 
 app_name = "main"
@@ -41,4 +44,7 @@ urlpatterns = [
     path("register/", register, name="register"),
     path("login/", login_user, name="login"),
     path("logout/", logout_user, name="logout"),
+    path("json/author/", show_json_by_author, name="show_json_by_author"),
+    path("delete/keyboard/<str:id>/", delete_keyboard, name="delete_keyboard"),
+    path("delete/mouse/<str:id>/", delete_mouse, name="delete_mouse"),
 ]

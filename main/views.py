@@ -160,11 +160,13 @@ def show_json_by_author(request):
         serializers.serialize("json", data), content_type="application/json"
     )
 
+@login_required(login_url="/login")
 def delete_keyboard(request, id):
     keyboard = Keyboard.objects.get(id=id)
     keyboard.delete()
     return redirect("main:show_main")
 
+@login_required(login_url="/login")
 def delete_mouse(request, id):
     mouse = Mouse.objects.get(id=id)
     mouse.delete()

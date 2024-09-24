@@ -164,14 +164,11 @@ path('xml/keyboard/<str:id>/', show_xml_by_id_keyboard, name='show_xml_by_id_key
 ```http
   GET /json/keyboard
 ```
-![image](https://github.com/user-attachments/assets/ad16ca9a-f9c9-41bb-a330-e4fe34d30c52)
-
 #### Get all keyboard items XML promise
 
 ```http
   GET /json/keyboard
 ```
-![image](https://github.com/user-attachments/assets/2a3ffb77-0ad5-43d8-a609-b3914de6775b)
 
 
 #### Get item by id JSON promise
@@ -184,7 +181,6 @@ path('xml/keyboard/<str:id>/', show_xml_by_id_keyboard, name='show_xml_by_id_key
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of item to fetch |
 
-![image](https://github.com/user-attachments/assets/283e1358-aeaa-4598-b0d7-9e6a7a4c120d)
 
 
 #### Get item by id XML promise
@@ -197,8 +193,142 @@ path('xml/keyboard/<str:id>/', show_xml_by_id_keyboard, name='show_xml_by_id_key
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of item to fetch |
 
-![image](https://github.com/user-attachments/assets/823e8df6-bbcf-420a-b6af-0d0d0e6e5596)
 
 
 
 
+
+## Tugas 4
+## Perbedaan HttpResponseRedirect() dan redirect()
+- `HttpResponseRedirect()` 
+Berfungsi sebagai mengembalikan respons HTTP yang nantinya akan melakukan redirect ke URL yang ditentukan melalui parameter dalam bentuk string
+
+Contoh:
+```
+return HttpResponseRedirect('/example/url/')
+```
+
+- `redirect()`
+Memiliki fungsi yang sama seperti `HttpResponseRedirect()` hanya saja terdapat tambahan yaitu mengalihkan client ke dalam views. fungsi `redirect()` dalam pembuatannya terdapat `HttpResponseRedirect()` di dalamnya, yang artinya `redirect()` merupakan shortcut dari `HttpResponseRedirect()`.
+
+Contoh:
+```
+return redirect('my_view_name')
+```
+## Cara Kerja Penghubungan Model Product dengan User
+Cara menghubungkan User dengan Model yang kita buat adalah dengan cara membuat attribute pada model yang mengandung Foreign Key di dalamnya. Nantinya Foreign Key ini akan mereferensikan kepada Primary Key User.
+
+Contoh:
+```
+class Keyboard(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=100)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+```
+
+Penjelasan:
+- Attribute author menyimpan Foreign Key User, Foreign Key ini berfungsi untuk mengidentifikasi object Keyboard ini dimiliki oleh siapa.
+- Terjadi relasi one-to-many antara User dengan model Keyboard yang artinya User dapat memiliki banyak Keyboard yang nantinya kita dapat me-filter berdasarkan id User.
+
+## Perbedaan antara Authentication dan Authorization
+- Authentication
+Adalah proses untuk mengidentifikasi dan mengverifikasi username/email ada di dalam database atau tidak. Jika ada maka akan mengecek apakah password yang diberikan valid atau tidak, jika valid maka proses Authentication selesai yang artinya User berhasi melakukan login.
+- Authorization
+Adalah metode untuk mengatur akses yang diberikan ke User. Contohnya seperti User tidak dapat mendapatkan akses yang hanya boleh dilakukan oleh admin. Ketidakbolehan itu adalah penyebab dari Authorization apa saja yang User punya dan tidak punya.
+
+- Implementasi di Django
+Di Django terdapat metode bawaan untuk Authentication, salah satunya adalah `login()`, fungsi ini akan mengverifikasi username dan password yang user masukan di dalam form. Bagusnya metode bawaan ini adalah password user sebelum disimpan dilakukan hashing terlebih dahulu.
+
+Untuk Authorization terdapat decorator yang dapat digunakan pada views, contohnya seperti 
+```
+@login_required(login_url="/login")
+def show_json_by_author(request):
+    keyboard_listings = Keyboard.objects.filter(author=request.user)
+    mouse_listings = Mouse.objects.filter(author=request.user)
+    data = list(chain(keyboard_listings, mouse_listings))
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
+``` 
+decorator ini menandakan bahwa fungsi `show_json_by_author` dapat diakses hanya kepada user yang sudah mmelakukan login.
+## Bagaimana Django Mengingat Pengguna yang Telah Login?
+Di Django terdapat sessionId yang disimpan melalui cookies. sessionId ini akan mengingat user mana yang sedang login berdasarkan sessionId tersebut. sessionId yang di dalam cookies nantinya akan dihapus apabila user melakukan logout.
+- Kegunaan Lain dari Cookies
+Kegunaan lain dari Cookies adalah dapat tidak hilang walaupun kita keluar dari website tersebut. Cookies tersebut akan terus ada di dalam device user selama user tidak melakukan logout, menghapus Cookies secara manual, dan tidak expired. Selain itu, Cookies juga dapat membantu menyimpan data yang sifatnya sementara dan tidak diperlukan disimpan di dalam database, tetapi disarankan untuk tidak menaruh data sensitif di dalam Cookies.
+- Apakah Semua Cookies Aman digunakan?
+Terdapat Cookies yang tidak aman, yaitu jika seseorang sengaja melakukan Cross Site Scripting (XSS) untuk mencuri data Cookies orang lain. Maka dari itu kita sebagai developer tidak boleh asal menaruh data sensitif yang ada di dalam Cookies. Selain itu, kita juga harus melakukan perlindungan terhadap Cookies yaitu dengan mengatur
+`HttpOnly` pada Cookies untuk mencegah pengaksesan Cookies melalui javascript sehingga terhindar dari serangan XSS.
+## Step by Step Tugas 4
+- Mengimplementasi Login, Register, dan Logout
+Mula - mula saya menambahkan fungsi pada views.py, saya menggunakan method bawaan python untuk Login, Register, dan Logout.
+- Register
+Untuk register saya membutuhkan form melalui `UserCreationForm(request.POST)` untuk meminta input pengguna yang ingin mendaftar, setelah valid maka saya akan mengembalikan pesan sukses dan mengembalikan halaman ke login. Views ini nantinya akan dapat diakses melalui url `path("register/", register, name="register")` dan merender template `register.html`
+```
+def register(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your account has been successfully created!")
+            return redirect("main:login")
+    context = {"form": form}
+    return render(request, "register.html", context)
+
+```
+- Login
+Untuk login saya juga membutuhkan form dengan menggunakan method bawaan `AuthenticationForm(data=request.POST)` jika form valid dan method `login(request, user)` berhasil, maka user berhasil logindan akan menyimpan cookies berupa sessionId.
+``` 
+def login_user(request):
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
+
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            response = HttpResponseRedirect(reverse("main:show_main"))
+            response.set_cookie("last_login", str(datetime.datetime.now()))
+            return response
+
+    else:
+        form = AuthenticationForm(request)
+    context = {"form": form}
+    return render(request, "login.html", context)
+```
+- Logout
+Akan menghapus sessionId dari cookies dan mengembalikan ke halaman login.
+```
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse("main:login"))
+    response.delete_cookie("last_login")
+    return response
+```
+- Menghubungkan Model dengan User
+Untuk menghubungkan model dengan user saya menambahkan Foreign Key pada setiap model yang saya mau, yang nantinya ketika user membuat object pada model tersebut, di dalam attribute author akan terdapat id user sebagai referensi dari Foreign Key.
+```
+class Keyboard(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=100)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    ....
+```
+- Menampilkan Informasi User yang sedang Login
+Untuk menampilkan informasi User saya dapat melakukan pada request pada view show_main saya. Saya melakukan request juga terhadap cookies yang sudah saya buat untuk menyimpan last login User. Saya juga menambahkan variable `your_listing` yang berisi setiap object yang telah dibuat oleh User.
+```
+@login_required(login_url="/login")
+def show_main(request):
+    keyboard_listings = Keyboard.objects.filter(author=request.user)
+    mouse_listings = Mouse.objects.filter(author=request.user)
+    your_listing = list(chain(keyboard_listings, mouse_listings))
+    context = {
+        .....
+        "current_user": request.user.username,
+        "your_listing": your_listing,
+        "last_login": request.COOKIES["last_login"],
+        ....
+    }
+
+    return render(request, "main.html", context)
+```

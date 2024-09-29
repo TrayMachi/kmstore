@@ -125,28 +125,28 @@ def show_json_mouse(request):
 
 
 def show_xml_by_id_keyboard(request, id):
-    data = Keyboard.objects.get(id=id)
+    data = Keyboard.objects.filter(pk=id)
     return HttpResponse(
         serializers.serialize("xml", data), content_type="application/xml"
     )
 
 
 def show_xml_by_id_mouse(request, id):
-    data = Mouse.objects.get(id=id)
+    data = Mouse.objects.filter(pk=id)
     return HttpResponse(
         serializers.serialize("xml", data), content_type="application/xml"
     )
 
 
 def show_json_by_id_keyboard(request, id):
-    data = Keyboard.objects.get(id=id)
+    data = Keyboard.objects.filter(pk=id)
     return HttpResponse(
         serializers.serialize("json", data), content_type="application/json"
     )
 
 
 def show_json_by_id_mouse(request, id):
-    data = Mouse.objects.get(id=id)
+    data = Mouse.objects.filter(pk=id)
     return HttpResponse(
         serializers.serialize("json", data), content_type="application/json"
     )

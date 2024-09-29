@@ -35,11 +35,7 @@ urlpatterns = [
         name="show_xml_by_id_keyboard",
     ),
     path("xml/mouse/<str:id>/", show_xml_by_id_mouse, name="show_xml_by_id_mouse"),
-    path(
-        "json/keyboard/<str:id>/",
-        show_json_by_id_keyboard,
-        name="show_json_by_id_keyboard",
-    ),
+    path("json/keyboard/<str:id>/", show_json_by_id_keyboard, name="show_json_by_id_keyboard"),
     path("json/mouse/<str:id>/", show_json_by_id_mouse, name="show_json_by_id_mouse"),
     path("register/", register, name="register"),
     path("login/", login_user, name="login"),

@@ -1,0 +1,17 @@
+<nav class="fixed w-full border-b-gray-800 border-b flex justify-between items-center py-6 px-8 backdrop-blur-lg">
+  <a href="" class="text-[#904edb] font-bold text-2xl">KMStore</a>
+  <ul class="flex gap-4">
+    <li>
+      <a href="/create/keyboard" class="text-[#904edb] hover:text-[#632f77] transition-all font-semibold">Keyboard</a>
+    </li>
+    <li>
+      <a href="/create/mouse" class="text-[#904edb] hover:text-[#632f77] transition-all font-semibold">Mouse</a>
+    </li>
+    <li>
+      <p class="text-[#904edb] hover:text-[#632f77] transition-all font-semibold">Welcome, {{ current_user }}</p>
+    </li>
+    <li>
+      <a href="{% url 'main:logout' %}" class="text-red-600 hover:text-red-800 transition-all font-semibold">Logout</a>
+    </li>
+  </ul>
+</nav>

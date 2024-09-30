@@ -3,7 +3,7 @@
 {% endblock meta %} {% block content %}
 <main class="flex items-center justify-center min-h-screen">
   <section
-    class="bg-[#f3f3f3] p-4 rounded-[20px] shadow-lg flex flex-col gap-5 items-center justify-center"
+    class="bg-black bg-opacity-50 backdrop-filter backdrop-blur-lg p-4 rounded-[20px] shadow-lg flex flex-col gap-5 items-center justify-center"
   >
     <h1 class="font-bold text-[24px]">Add New Mouse to Sell</h1>
 
@@ -11,16 +11,22 @@
       {% csrf_token %}
       <div class="grid grid-cols-2 gap-4">
         {% for field in form %}
-        <div class="flex flex-col gap-2 {% if field.name == 'description' %}col-span-2 items-center{% endif %}">
-          <label for="{{ field.id_for_label }}" class="font-bold"
+        <div
+          class="flex flex-col gap-2 {% if field.name == 'description' %}col-span-2 items-center{% endif %}"
+        >
+          <label for="{{ field.id_for_label }}" class="text-white"
             >{{ field.label }}</label
           >
-          <div>{{ field }}</div>
+          <div
+            class="p-2 text-black bg-[#4625581a] hover:bg-[#3602010a] transition-all rounded-lg"
+          >
+            {{ field }}
+          </div>
         </div>
         {% endfor %}
       </div>
       <button
-        class="p-2 bg-[#424769] hover:bg-[#474F7A] transition-all rounded-[12px] hover:shadow-lg text-white"
+        class="p-2 bg-[#904edb] hover:bg-[#632f77] active:bg-[#7d3699] text-[#0d0e0d] transition-all rounded-[12px] hover:shadow-lg text-white"
         type="submit"
         value="Add Mouse"
       >

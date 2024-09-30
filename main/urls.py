@@ -17,6 +17,8 @@ from main.views import (
     show_json_by_author,
     delete_keyboard,
     delete_mouse,
+    edit_keyboard,
+    edit_mouse,
 )
 
 app_name = "main"
@@ -43,4 +45,6 @@ urlpatterns = [
     path("json/author/", show_json_by_author, name="show_json_by_author"),
     path("delete/keyboard/<str:id>/", delete_keyboard, name="delete_keyboard"),
     path("delete/mouse/<str:id>/", delete_mouse, name="delete_mouse"),
+    path("edit/keyboard/<str:id>/", edit_keyboard, name="edit_keyboard"),
+    path("edit/mouse/<str:id>/", edit_mouse, name="edit_mouse"),
 ]

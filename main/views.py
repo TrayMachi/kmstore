@@ -18,6 +18,7 @@ def show_main(request):
     keyboard_listings = Keyboard.objects.filter(author=request.user)
     mouse_listings = Mouse.objects.filter(author=request.user)
     your_listing = list(chain(keyboard_listings, mouse_listings))
+    keyboard_mouse_all = list(chain(Keyboard.objects.all(), Mouse.objects.all()))
     context = {
         "title": "KMStore",
         "name": "Tristan Agra Yudhistira",
@@ -26,8 +27,7 @@ def show_main(request):
         "current_user": request.user.username,
         "your_listing": your_listing,
         "last_login": request.COOKIES["last_login"],
-        "keyboards": Keyboard.objects.all(),
-        "mouse": Mouse.objects.all(),
+        "keyboard_mouse_all": keyboard_mouse_all,
     }
 
     return render(request, "main.html", context)
@@ -162,12 +162,36 @@ def show_json_by_author(request):
 
 @login_required(login_url="/login")
 def delete_keyboard(request, id):
-    keyboard = Keyboard.objects.get(id=id)
+    keyboard = Keyboard.objects.get(pk=id)
     keyboard.delete()
     return redirect("main:show_main")
 
 @login_required(login_url="/login")
 def delete_mouse(request, id):
-    mouse = Mouse.objects.get(id=id)
+    mouse = Mouse.objects.get(pk=id)
     mouse.delete()
     return redirect("main:show_main")
+
+def edit_keyboard(request, id):
+    keyboard = Keyboard.objects.get(pk=id)
+    form = KeyboardForm(request.POST or None, instance=keyboard)
+
+    if form.is_valid() and request.method == "POST":
+        keyboard = form.save(commit=False)
+        keyboard.author = request.user
+        keyboard.save()
+        return redirect("main:show_main")
+
+    return render(request, "keyboard_form.html", {"form": form})
+
+def edit_mouse(request, id):
+    mouse = Mouse.objects.get(pk=id)
+    form = MouseForm(request.POST or None, instance=mouse)
+
+    if form.is_valid() and request.method == "POST":
+        mouse = form.save(commit=False)
+        mouse.author = request.user
+        mouse.save()
+        return redirect("main:show_main")
+
+    return render(request, "mouse_form.html", {"form": form})

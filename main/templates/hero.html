@@ -1,0 +1,50 @@
+{% load static %}
+<section class="min-h-[90vh] flex items-center">
+  <div class="flex lg:flex-row flex-col gap-4 items-center justify-between w-full px-[5vw] my-[5vh] lg:my-[15vh]">
+    <div class="flex flex-col gap-2">
+      <h1 class="text-white font-bold text-[40px]">
+        Welcome to <span class="text-[#904edb] animate-pulse">KMStore</span>
+        <br />Sell your
+        <span class="bg-purple-500 px-2 rounded-lg animate-pulse">mouse</span>
+        and
+        <span class="bg-purple-500 px-2 rounded-lg animate-pulse"
+          >keyboard</span
+        >
+        here!
+      </h1>
+      <a href="#product">
+        <button
+          class="bg-[#b33e95] hover:bg-[#832e6e] active:bg-[#fcd7f3] text-[#0d0e0d] font-semibold transition-all rounded-lg hover:shadow-lg p-2"
+        >
+          Check This Out
+        </button>
+      </a>
+    </div>
+    <div class="grid grid-cols-2 max-md:grid-cols-1 gap-6">
+      <div class='max-md:hidden'></div>
+      <a
+        href="{% url 'main:create_keyboard' %}"
+        class="flex flex-col gap-4 items-center justify-center px-6 py-8 border border-gray-300 rounded-[16px] hover:opacity-80 hover:translate-y-8 transition-all"
+      >
+        <img
+          src="{% static 'image/keyboard.png' %}"
+          alt="Keyboard"
+          class="w-[300px] h-[250px]"
+        />
+        <h2 class="text-white font-bold text-[16px]">Sell a Keyboard</h2>
+      </a>
+      <a
+        href="{% url 'main:create_mouse' %}"
+        class="flex flex-col gap-4 items-center justify-center px-6 py-8 border border-gray-300 rounded-[16px] hover:opacity-80 hover:-translate-y-8 transition-all"
+      >
+        <img
+          src="{% static 'image/mouse.png' %}"
+          alt="Mouse"
+          class="w-[300px] h-[250px]"
+        />
+        <h2 class="text-white font-bold text-[16px]">Sell a Mouse</h2>
+      </a>
+      <div class='max-md:hidden'></div>
+    </div>
+  </div>
+</section>

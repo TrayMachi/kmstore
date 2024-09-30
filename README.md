@@ -383,3 +383,19 @@ Flex Box dan Grid Layout adalah metode untuk melakukan pengaturan tata letak seb
 ukuran dan posisi elemen dalam grid yang dibentuk.
 
 Untuk menentukan menggunakan Grid atau Flex tergantung dari kebutuhan yang kita perlukan. Jika kita hanya perlu model tata letak satu dimensi layaknya sebuah navbar, maka disarankan menggunakan Flex. Tetapi, jika kita ingin membuat sebuah dashboard yang disebut dengan bento dashboard, maka memerlukan model tata letak dua dimensi seperti Grid.
+
+## Step-by-Step Tugas 5
+- Fungsi Delete dan Edit
+Untuk fungsi delete saya menggunakan metode bawaan python yaitu delete() yang berguna untuk menghapus sebuah objek yang dimana objek yang saya miliki sudah saya `request` berdasarkan `id` yang didapat.
+
+Untuk Edit mirip seperti create biasa dan bahkan saya menggunakan url create saya, hanya sajaa saya menambahkan instance atau default value untuk form tersebut yang dimana default value berasalkan dari value yang mau di-edit.
+
+- Desain pada Template HTML
+
+Untuk desain saya menggunakan `Tailwind Play CDN`, tetapi saya juga menggunakan Vanilla CSS untuk default style. Pada form desain yang saya buat lumayan mirip, saya menggunakan `for loop` untuk mengiterasi `form field` yang mendesignnya dengan responsif.
+
+Untuk bagian hero saya menambahkan animasi pulse dan beberapa responsiveness dari `hover:`. Saya juga menerapkan flex dan grid agar website tetap terlihat bagus di device apapun.
+
+Untuk bagian Card saya menggunakan border dan flex vertical untuk mengatur isi dari card tersebut. Untuk mengatur kumpulan dari Card saya menggunakan grid dengan jumlah kolom maksimal 4, tetapi pada saat mobile jumlah kolomnya hanya 1.
+
+Untuk navbar saya menggunakan `fixed` yang dimana akan tetap di atas selama kita meng-scroll. Saya juga menambahkan sentuhan `backdrop-blur` yang dimana akan memberikan glass effect kepada background navbar saya.

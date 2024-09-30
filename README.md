@@ -332,3 +332,54 @@ def show_main(request):
 
     return render(request, "main.html", context)
 ```
+
+
+# Tugas 5
+
+## CSS selector untuk suatu elemen HTML
+Pada CSS terdapat banyak selector yang bisa kita gunakan untuk men-styling elemen HTML. Berikut urutan prioritas selector yang ada pada CSS:
+
+- Properti `!important`
+Jika terdapat properti !important pada sebuah selector, maka hal tersebut akan menjadi prioritas paling tinggi dalam penge-style-nya
+
+- Inline Selector `style`
+Selector ini terdapat di dalam sebuah elemen HTML atau yang biasa disebut sebagai attribute dari elemen HTML itu sendiri. Selector ini akan diprioritaskan dibandingkan yang ada di file CSS (kecuali jika ada `!important`)
+
+- ID Selector `#id`
+Selector ini biasanya ditandai dengan pagar `#example` yang artinya itu merupakan style dari elemen HTML dengan id `example`
+
+- Class Selector `.class`
+Selector ini biasanya ditandai dengan attribute dari elemen HTML seperti `class=yourClass`
+
+- Tag Selector
+Selector ini akan mempengaruhi tag yang di-style contohnya seperti `p, h1, h2, span, dll`
+
+- Universal Selector `*`
+Selector ini merupakan prioritas paling rendah yang dimana selector ini akan mempengaruhi styling dari semua elemen HTML
+
+## Responsive Design
+Responsive Design berguna agar seluruh kalangan device pengguna dapat merasakan pengalaman pengguna yang nyaman. Selain itu, Responsive Design juga menjual daya tarik yang dimiliki oleh sebuah aplikasi agar aplikasi tersebut lebih dilirik dan dipadati pengguna.
+
+- Contoh aplikasi dengan Responsive Design:
+Web - web yang terdapat di repo github ini
+
+- Contoh aplikasi yang belum Responsive Design:
+pws
+## Perbedaan antara Margin, Border, dan Padding
+
+Terdapat 3 Layer dalam sebuah container, yaitu `Margin`, `Border`, dan `Padding`
+
+- Margin: Ruang di luar elemen, memisahkan elemen dari elemen lainnya. Dapat diatur dengan `margin: 10px;` untuk semua sisi atau margin-top, margin-right, margin-bottom, margin-left untuk sisi tertentu.
+
+- Border: Garis yang mengelilingi elemen, memberikan batas visual. Dapat diimplementasikan dengan `border: 2px solid black;`, yang mengatur ketebalan, style, dan warna border.
+
+- Padding: Ruang di dalam elemen, antara konten dan border. Diatur dengan `padding: 10px;` untuk semua sisi, atau dengan cara yang sama seperti margin untuk sisi tertentu.
+## Flex Box dan Grid Layout 
+Flex Box dan Grid Layout adalah metode untuk melakukan pengaturan tata letak sebuah elemen atau kontainer agar lebih responsif.
+
+- Flex Box: model tata letak satu dimensi yang dirancang untuk mengatur elemen dalam satu baris (horizontal) atau satu kolom (vertikal). Ini memudahkan penataan elemen dalam suatu kontainer dengan mengatur ruang dan ukuran elemen secara otomatis.
+
+- Grid Layout: model tata letak dua dimensi yang memungkinkan pengaturan elemen dalam baris dan kolom. Ini memberikan lebih banyak kontrol atas 
+ukuran dan posisi elemen dalam grid yang dibentuk.
+
+Untuk menentukan menggunakan Grid atau Flex tergantung dari kebutuhan yang kita perlukan. Jika kita hanya perlu model tata letak satu dimensi layaknya sebuah navbar, maka disarankan menggunakan Flex. Tetapi, jika kita ingin membuat sebuah dashboard yang disebut dengan bento dashboard, maka memerlukan model tata letak dua dimensi seperti Grid.

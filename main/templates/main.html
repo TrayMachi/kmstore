@@ -1,64 +1,27 @@
-{% extends 'base.html' %} {% block meta %}
+{% extends 'base.html' %} {% load static %} {% block meta %}
 <title>KMStore</title>
 {% endblock meta %} {% block content %}
 <main class="min-h-screen">
-  <header
-    class="bg-purple-500 text-white py-4 px-8 flex justify-between shadow-lg"
-  >
-    <div class="flex gap-2 items-center">
-      <h1 class="text-2xl font-bold">{{ title }}</h1>
-      <a
-        href="{% url 'main:logout' %}"
-        class="bg-red-500 hover:bg-red-700 transition-all hover:shadow-md text-white font-bold py-2 px-4 rounded"
-      >
-        <button>Logout</button>
-      </a>
-    </div>
-    <div class="flex gap-4">
-      <p class="text-lg font-bold">{{ name }}</p>
-      <p class="text-lg font-bold">{{ npm }}</p>
-      <p class="text-lg font-bold">{{ class }}</p>
-    </div>
-  </header>
-  <section class="flex items-center justify-center min-h-[90vh]">
-    <div class="bg-[#fbfbfb] shadow-lg p-4 rounded-lg flex flex-col gap-4">
-      <h1 class="text-4xl font-bold text-center">{{ title }}</h1>
-      <p class="text-center">
-        Welcome to KMStore, the best keyboard & mouse online store in the world!
-      </p>
-      <p class="text-center">
-        Hi <span class="font-bold">{{ current_user }}</span>, you can sell your
-        keyboard and mouse here!
-      </p>
-      <p class="text-center">Last login: {{ last_login }}</p>
-      <div class="flex justify-center gap-2">
-        <a
-          href="/create/keyboard"
-          target="_blank"
-          class="bg-purple-500 hover:bg-purple-700 transition-all hover:shadow-md text-white font-bold py-2 px-4 rounded"
-          >Sell a Keyboard</a
-        >
-        <a
-          href="/create/mouse"
-          target="_blank"
-          class="bg-blue-500 hover:bg-blue-700 transition-all hover:shadow-md text-white font-bold py-2 px-4 rounded"
-          >Sell a Mouse</a
-        >
-      </div>
-    </div>
-  </section>
-  {% if not your_listing %}
-  <h1 class="text-center my-[20vh] font-bold text-4xl">Tidak ada barang yang anda jual</h1>
+  {% include 'navbar.html' %} {% include 'hero.html' %} {% if not your_listing%}
+  <h1 class="text-center my-[20vh] font-bold text-4xl">
+    You haven't listed anything yet
+    <img
+      src="{% static 'image/squirtle.png' %}"
+      alt="Sold Out"
+      class="mx-auto"
+    />
+  </h1>
   {% else %}
-  <section class="flex items-center justify-center min-h-screen mx-[10vw]">
+  <section
+    id="product"
+    class="flex items-center justify-center min-h-screen mx-[10vw]"
+  >
     <div class="flex flex-col gap-4">
-      <h1 class="text-center my-[20vh] font-bold text-4xl">Your Listing</h1>
-      <div
-        class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-2 gap-x-3 gap-y-4"
-      >
+      <h1 class="text-center font-bold text-4xl">Your Listing</h1>
+      <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
         {% for prod in your_listing %}
         <div
-          class="p-4 rounded-lg w-[300px] flex flex-col gap-3 justify-center bg-[#fbfbfb] shadow-lg"
+          class="p-4 rounded-lg flex flex-col gap-3 justify-center border border-gray-300 shadow-lg m-4 hover:opacity-80 transition-all"
         >
           <img
             width="200px"
@@ -67,105 +30,112 @@
             alt="{{ prod.name }}"
           />
           <h2 class="text-xl font-bold text-center">{{ prod.name }}</h2>
-          <p>{{ prod.description }}</p>
+          <p class="text-white">{{ prod.description }}</p>
           <div class="grid grid-cols-2">
             <h2 class="font-bold">Brand</h2>
-            <p>: {{ prod.brand }}</p>
+            <p class="text-white">: {{ prod.brand }}</p>
             {% if prod.dpi %}
+            <h2 class="font-bold">Category</h2>
+            <p class="text-white">: Mouse</p>
             <h2 class="font-bold">DPI</h2>
-            <p>: {{ prod.dpi }}</p>
+            <p class="text-white">: {{ prod.dpi }}</p>
             {% endif %} {% if prod.switch %}
+            <h2 class="font-bold">Category</h2>
+            <p class="text-white">: Keyboard</p>
             <h2 class="font-bold">Switch</h2>
-            <p>: {{ prod.switch }}</p>
-            {% endif %}
-            {% if prod.weight %}
+            <p class="text-white">: {{ prod.switch }}</p>
+            {% endif %} {% if prod.weight %}
             <h2 class="font-bold">Weight</h2>
-            <p>: {{ prod.weight }}g</p>
+            <p class="text-white">: {{ prod.weight }}g</p>
             {% endif %}
             <h2 class="font-bold">Stock</h2>
-            <p>: {{ prod.stock }}</p>
+            <p class="text-white">: {{ prod.stock }}</p>
             <h2 class="font-bold">Price</h2>
-            <p>: {{ prod.price }}</p>
+            <p class="text-white">: {{ prod.price }}</p>
             <h2 class="font-bold">Penjual</h2>
-            <p>: {{ prod.author.username }}</p>
+            <p class="text-white">: {{ prod.author.username }}</p>
+          </div>
+          <div>
+            {% if prod.dpi %}
+            <a href="{% url 'main:delete_mouse' prod.id %}">
+              <button
+                class="p-2 bg-red-500 hover:bg-red-700 text-[#0d0e0d] transition-all rounded-[12px] hover:shadow-lg text-white"
+              >
+                Delete
+              </button>
+            </a>
+            <a href="{% url 'main:edit_mouse' prod.id %}">
+              <button
+                class="p-2 bg-[#904edb] hover:bg-[#632f77] active:bg-[#7d3699] text-[#0d0e0d] transition-all rounded-[12px] hover:shadow-lg text-white"
+              >
+                Edit
+              </button>
+            </a>
+            {% endif %} {% if prod.switch %}
+            <a href="{% url 'main:delete_keyboard' prod.id %}">
+              <button
+                class="p-2 bg-red-500 hover:bg-red-700 active:bg-[#7d3699] text-[#0d0e0d] transition-all rounded-[12px] hover:shadow-lg text-white"
+              >
+                Delete
+              </button>
+            </a>
+            <a href="{% url 'main:edit_keyboard' prod.id %}">
+              <button
+                class="p-2 bg-[#904edb] hover:bg-[#632f77] active:bg-[#7d3699] text-[#0d0e0d] transition-all rounded-[12px] hover:shadow-lg text-white"
+              >
+                Edit
+              </button>
+            </a>
+            {% endif %}
           </div>
         </div>
         {% endfor %}
       </div>
     </div>
   </section>
-  {% endif %} {% if not mouse %}
-  <h2 class="text-center my-[20vh] font-bold text-4xl">Belum ada mouse</h2>
+  {% endif %} {% if not keyboard_mouse_all %}
+  <h2 class="text-center my-[20vh] font-bold text-4xl">Sold Out</h2>
+  <img src="{% static 'image/squirtle.png' %}" alt="Sold Out" class="mx-auto" />
   {% else %}
   <section class="flex items-center justify-center min-h-screen mx-[10vw]">
     <div class="flex flex-col gap-4">
-      <h1 class="text-4xl font-bold text-center">Mouse</h1>
-      <div
-        class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-2 gap-x-3 gap-y-4"
-      >
-        {% for m in mouse %}
+      <h1 class="text-center font-bold text-4xl">Available Products</h1>
+      <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-4">
+        {% for prod in keyboard_mouse_all %}
         <div
-          class="p-4 rounded-lg w-[300px] flex flex-col gap-3 justify-center bg-[#fbfbfb] shadow-lg"
+          class="p-4 rounded-lg flex flex-col gap-3 justify-center border border-gray-300 shadow-lg m-4 hover:opacity-80 transition-all"
         >
           <img
             width="200px"
-            src="{{ m.image }}"
+            src="{{ prod.image }}"
             class="mx-auto"
-            alt="{{ m.name }}"
+            alt="{{ prod.name }}"
           />
-          <h2 class="text-xl font-bold text-center">{{ m.name }}</h2>
-          <p>{{ m.description }}</p>
+          <h2 class="text-xl font-bold text-center">{{ prod.name }}</h2>
+          <p class="text-white">{{ prod.description }}</p>
           <div class="grid grid-cols-2">
             <h2 class="font-bold">Brand</h2>
-            <p>: {{ m.brand }}</p>
+            <p class="text-white">: {{ prod.brand }}</p>
+            {% if prod.dpi %}
+            <h2 class="font-bold">Category</h2>
+            <p class="text-white">: Mouse</p>
             <h2 class="font-bold">DPI</h2>
-            <p>: {{ m.dpi }}</p>
-            <h2 class="font-bold">Weight</h2>
-            <p>: {{ m.weight }}g</p>
-            <h2 class="font-bold">Stock</h2>
-            <p>: {{ m.stock }}</p>
-            <h2 class="font-bold">Price</h2>
-            <p>: {{ m.price }}</p>
-            <h2 class="font-bold">Penjual</h2>
-            <p>: {{ m.author.username }}</p>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-  {% endif %} {% if not keyboards %}
-  <h2 class="text-center my-[20vh] font-bold text-4xl">Belum ada keyboard</h2>
-  {% else %}
-  <section class="flex items-center justify-center min-h-screen mx-[10vw]">
-    <div class="flex flex-col gap-4">
-      <h1 class="text-4xl font-bold text-center">Keyboard</h1>
-      <div
-        class="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-2 gap-x-3 gap-y-4"
-      >
-        {% for k in keyboards %}
-        <div
-          class="p-4 rounded-lg w-[300px] flex flex-col gap-3 justify-center bg-[#fbfbfb] shadow-lg"
-        >
-          <img
-            width="200px"
-            src="{{ k.image }}"
-            class="mx-auto"
-            alt="{{ k.name }}"
-          />
-          <h2 class="text-xl font-bold text-center">{{ k.name }}</h2>
-          <p>{{ k.description }}</p>
-          <div class="grid grid-cols-2">
-            <h2 class="font-bold">Brand</h2>
-            <p>: {{ k.brand }}</p>
+            <p class="text-white">: {{ prod.dpi }}</p>
+            {% endif %} {% if prod.switch %}
+            <h2 class="font-bold">Category</h2>
+            <p class="text-white">: Keyboard</p>
             <h2 class="font-bold">Switch</h2>
-            <p>: {{ k.switch }}</p>
+            <p class="text-white">: {{ prod.switch }}</p>
+            {% endif %} {% if prod.weight %}
+            <h2 class="font-bold">Weight</h2>
+            <p class="text-white">: {{ prod.weight }}g</p>
+            {% endif %}
             <h2 class="font-bold">Stock</h2>
-            <p>: {{ k.stock }}</p>
+            <p class="text-white">: {{ prod.stock }}</p>
             <h2 class="font-bold">Price</h2>
-            <p>: {{ k.price }}</p>
+            <p class="text-white">: {{ prod.price }}</p>
             <h2 class="font-bold">Penjual</h2>
-            <p>: {{ k.author.username }}</p>
+            <p class="text-white">: {{ prod.author.username }}</p>
           </div>
         </div>
         {% endfor %}

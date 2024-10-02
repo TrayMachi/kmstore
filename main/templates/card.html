@@ -1,0 +1,69 @@
+<div
+  class="p-4 rounded-lg flex flex-col gap-3 justify-center border border-gray-300 shadow-lg m-4 hover:opacity-80 transition-all"
+>
+  <img
+    width="200px"
+    src="{{ prod.image }}"
+    class="mx-auto"
+    alt="{{ prod.name }}"
+  />
+  <h2 class="text-xl font-bold text-center">{{ prod.name }}</h2>
+  <p class="text-white">{{ prod.description }}</p>
+  <div class="grid grid-cols-2">
+    <h2 class="font-bold">Brand</h2>
+    <p class="text-white">: {{ prod.brand }}</p>
+    {% if prod.dpi %}
+    <h2 class="font-bold">Category</h2>
+    <p class="text-white">: Mouse</p>
+    <h2 class="font-bold">DPI</h2>
+    <p class="text-white">: {{ prod.dpi }}</p>
+    {% endif %} {% if prod.switch %}
+    <h2 class="font-bold">Category</h2>
+    <p class="text-white">: Keyboard</p>
+    <h2 class="font-bold">Switch</h2>
+    <p class="text-white">: {{ prod.switch }}</p>
+    {% endif %} {% if prod.weight %}
+    <h2 class="font-bold">Weight</h2>
+    <p class="text-white">: {{ prod.weight }}g</p>
+    {% endif %}
+    <h2 class="font-bold">Stock</h2>
+    <p class="text-white">: {{ prod.stock }}</p>
+    <h2 class="font-bold">Price</h2>
+    <p class="text-white">: {{ prod.price }}</p>
+    <h2 class="font-bold">Penjual</h2>
+    <p class="text-white">: {{ prod.author.username }}</p>
+  </div>
+  <div>
+    {% if prod.dpi %}
+    <a href="{% url 'main:delete_mouse' prod.id %}">
+      <button
+        class="p-2 bg-red-500 hover:bg-red-700 text-[#0d0e0d] transition-all rounded-[12px] hover:shadow-lg text-white"
+      >
+        Delete
+      </button>
+    </a>
+    <a href="{% url 'main:edit_mouse' prod.id %}">
+      <button
+        class="p-2 bg-[#904edb] hover:bg-[#632f77] active:bg-[#7d3699] text-[#0d0e0d] transition-all rounded-[12px] hover:shadow-lg text-white"
+      >
+        Edit
+      </button>
+    </a>
+    {% endif %} {% if prod.switch %}
+    <a href="{% url 'main:delete_keyboard' prod.id %}">
+      <button
+        class="p-2 bg-red-500 hover:bg-red-700 active:bg-[#7d3699] text-[#0d0e0d] transition-all rounded-[12px] hover:shadow-lg text-white"
+      >
+        Delete
+      </button>
+    </a>
+    <a href="{% url 'main:edit_keyboard' prod.id %}">
+      <button
+        class="p-2 bg-[#904edb] hover:bg-[#632f77] active:bg-[#7d3699] text-[#0d0e0d] transition-all rounded-[12px] hover:shadow-lg text-white"
+      >
+        Edit
+      </button>
+    </a>
+    {% endif %}
+  </div>
+</div>

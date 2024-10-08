@@ -399,3 +399,19 @@ Untuk bagian hero saya menambahkan animasi pulse dan beberapa responsiveness dar
 Untuk bagian Card saya menggunakan border dan flex vertical untuk mengatur isi dari card tersebut. Untuk mengatur kumpulan dari Card saya menggunakan grid dengan jumlah kolom maksimal 4, tetapi pada saat mobile jumlah kolomnya hanya 1.
 
 Untuk navbar saya menggunakan `fixed` yang dimana akan tetap di atas selama kita meng-scroll. Saya juga menambahkan sentuhan `backdrop-blur` yang dimana akan memberikan glass effect kepada background navbar saya.
+
+# Tugas 6
+## Manfaat JavaScript
+Manfaat JavaScript untuk pengembangan aplikasi web adalah untuk mendukung interaktifitas website. Selain itu, JavaScript juga dapat berguna untuk membuat website kita menjadi dynamic.
+## Fungsi await
+Fungsi `await` terutama saat menggunakan `fetch()` adalah agar memastikan bahwa `fetching` yang kita lakukan selesai terlebih dahulu sebelum menjalankan command selanjutnya. Jika kita tidak memakai `await`, maka akan bertabrakan dengan command selanjutnya yang dimana memungkinkan bahwa command selanjutnya membutuhkan hasil `fetching` yang kita mau, sehingga jika `fetching` belum selesai, akan menimbulkan kekeliruan.
+## csrf_exempt pada View
+Penggunaan decorator `csrf_exempt` pada view yang akan digunakan untuk AJAX POST di framework seperti Django umumnya diperlukan untuk menangani `CSRF (Cross-Site Request Forgery)`, yaitu sebuah mekanisme keamanan yang memastikan bahwa permintaan POST datang dari sumber yang terpercaya (yaitu dari aplikasi atau situs yang sama). Namun, pada beberapa kasus tertentu, kita perlu menggunakan decorator ini untuk mengecualikan view tersebut dari perlindungan `CSRF`.
+## Pembersihan Data Input di Backend
+Backend dapat membuat proses validasi tanpa diganggu oleh pengguna melalui front-end, jika pada front-end validasi dapat dilewati oleh pengguna yang memanipulasi request menggunakan query-query atau dengan menonaktifkan JavaScript.
+## Step-by-Step Tugas 6
+- AJAX GET
+Untuk melakukannya, saya menambahkan tag script di bagian kedua paling bawah pada `main.html`. Saya membuat fungsi yang dapat meng-fetching method `GET` yang sudah saya buat, setelah itu saya membuat fungsi refresh yang nantinya akan mengiterasi hasil dari fungsi `fetching` yang sudah saya buat, sehingga produk yang saya buat dapat ditampilkan secara realtime.
+
+- AJAX POST
+Saya membuat komponen modal dengan memanfaatkan class `hidden` dan dapat juga di-show dengan memanfaatkan JavaScript. Akan ada tombol yang dimana jika dipencet akan mengarah kepada fungsi untuk membuka modal dengan cara menghapus class `hidden` yang saya taruh pada modal. Setelah modal muncul akan ada form `POST` yang mengarah ke api ke views yang sudah buat khusus untuk `AJAX`. Setelah melakukan `POST` akan melakukan fungsi refresh agar user tidak perlu reload page untuk mendapatkan info produk yang baru, lalu modal akan menghapus semua input.

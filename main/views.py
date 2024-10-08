@@ -10,14 +10,12 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.urls import reverse
 from itertools import chain
-
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 @login_required(login_url="/login")
 def show_main(request):
-    keyboard_listings = Keyboard.objects.filter(author=request.user)
-    mouse_listings = Mouse.objects.filter(author=request.user)
-    your_listing = list(chain(keyboard_listings, mouse_listings))
     keyboard_mouse_all = list(chain(Keyboard.objects.all(), Mouse.objects.all()))
     context = {
         "title": "KMStore",
@@ -25,7 +23,6 @@ def show_main(request):
         "npm": "2306245112",
         "class": "PBP D",
         "current_user": request.user.username,
-        "your_listing": your_listing,
         "last_login": request.COOKIES["last_login"],
         "keyboard_mouse_all": keyboard_mouse_all,
     }
@@ -82,6 +79,61 @@ def create_keyboard(request):
 
     return render(request, "keyboard_form.html", {"form": form})
 
+@csrf_exempt
+@require_POST
+def create_keyboard_ajax(request):
+    name = request.POST.get("name")
+    price = request.POST.get("price")
+    description = request.POST.get("description")
+    stock = request.POST.get("stock")
+    switch = request.POST.get("switch")
+    brand = request.POST.get("brand")
+    image = request.POST.get("image")
+    author = request.user
+
+    keyboard = Keyboard(
+        name=name,
+        price=price,
+        description=description,
+        stock=stock,
+        switch=switch,
+        brand=brand,
+        image=image,
+        author=author,
+    )
+
+    keyboard.save()
+
+    return HttpResponse("Keyboard has been created successfully!", status=201)
+
+@csrf_exempt
+@require_POST
+def create_mouse_ajax(request):
+    name = request.POST.get("name")
+    price = request.POST.get("price")
+    description = request.POST.get("description")
+    stock = request.POST.get("stock")
+    dpi = request.POST.get("dpi")
+    weight = request.POST.get("weight")
+    brand = request.POST.get("brand")
+    image = request.POST.get("image")
+    author = request.user
+
+    mouse = Mouse(
+        name=name,
+        price=price,
+        description=description,
+        stock=stock,
+        dpi=dpi,
+        weight=weight,
+        brand=brand,
+        image=image,
+        author=author,
+    )
+
+    mouse.save()
+
+    return HttpResponse("Mouse has been created successfully!", status=201)
 
 @login_required(login_url="/login")
 def create_mouse(request):

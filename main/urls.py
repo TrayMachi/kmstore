@@ -19,6 +19,8 @@ from main.views import (
     delete_mouse,
     edit_keyboard,
     edit_mouse,
+    create_keyboard_ajax,
+    create_mouse_ajax,
 )
 
 app_name = "main"
@@ -47,4 +49,6 @@ urlpatterns = [
     path("delete/mouse/<str:id>/", delete_mouse, name="delete_mouse"),
     path("edit/keyboard/<str:id>/", edit_keyboard, name="edit_keyboard"),
     path("edit/mouse/<str:id>/", edit_mouse, name="edit_mouse"),
+    path("create-keyboard-ajax", create_keyboard_ajax, name="create_keyboard_ajax"),
+    path("create-mouse-ajax", create_mouse_ajax, name="create_mouse_ajax"),
 ]

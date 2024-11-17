@@ -1,4 +1,5 @@
-from django.http import HttpResponse, HttpResponseRedirect
+import json
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from main.models import Keyboard, Mouse
 from main.forms import KeyboardForm, MouseForm
@@ -12,6 +13,7 @@ from django.urls import reverse
 from itertools import chain
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+
 
 # Create your views here.
 @login_required(login_url="/login")
@@ -79,6 +81,7 @@ def create_keyboard(request):
 
     return render(request, "keyboard_form.html", {"form": form})
 
+
 @csrf_exempt
 @require_POST
 def create_keyboard_ajax(request):
@@ -105,6 +108,7 @@ def create_keyboard_ajax(request):
     keyboard.save()
 
     return HttpResponse("Keyboard has been created successfully!", status=201)
+
 
 @csrf_exempt
 @require_POST
@@ -134,6 +138,7 @@ def create_mouse_ajax(request):
     mouse.save()
 
     return HttpResponse("Mouse has been created successfully!", status=201)
+
 
 @login_required(login_url="/login")
 def create_mouse(request):
@@ -203,6 +208,7 @@ def show_json_by_id_mouse(request, id):
         serializers.serialize("json", data), content_type="application/json"
     )
 
+
 @login_required(login_url="/login")
 def show_json_by_author(request):
     keyboard_listings = Keyboard.objects.filter(author=request.user)
@@ -212,17 +218,20 @@ def show_json_by_author(request):
         serializers.serialize("json", data), content_type="application/json"
     )
 
+
 @login_required(login_url="/login")
 def delete_keyboard(request, id):
     keyboard = Keyboard.objects.get(pk=id)
     keyboard.delete()
     return redirect("main:show_main")
 
+
 @login_required(login_url="/login")
 def delete_mouse(request, id):
     mouse = Mouse.objects.get(pk=id)
     mouse.delete()
     return redirect("main:show_main")
+
 
 def edit_keyboard(request, id):
     keyboard = Keyboard.objects.get(pk=id)
@@ -236,6 +245,7 @@ def edit_keyboard(request, id):
 
     return render(request, "keyboard_form.html", {"form": form})
 
+
 def edit_mouse(request, id):
     mouse = Mouse.objects.get(pk=id)
     form = MouseForm(request.POST or None, instance=mouse)
@@ -247,3 +257,127 @@ def edit_mouse(request, id):
         return redirect("main:show_main")
 
     return render(request, "mouse_form.html", {"form": form})
+
+
+@csrf_exempt
+def create_keyboard_api(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            name = data["name"]
+            price = data["price"]
+            description = data["description"]
+            stock = data["stock"]
+            switch = data["switch"]
+            brand = data["brand"]
+            image = data["image"]
+            author = request.user
+            
+            if price < 0:
+                raise Exception("Price must be greater than 0.")
+            
+            if stock < 0:
+                raise Exception("Stock must be greater than 0.")
+
+            keyboard = Keyboard.objects.create(
+                name=name,
+                price=price,
+                description=description,
+                stock=stock,
+                switch=switch,
+                brand=brand,
+                image=image,
+                author=author,
+            )
+
+            if keyboard is None:
+                raise Exception("Failed to create keyboard.")
+
+            keyboard.save()
+
+            return JsonResponse(
+                {
+                    "status": "success",
+                    "message": "Keyboard has been created successfully!",
+                },
+                status=201,
+            )
+        except Exception as e:
+            return JsonResponse(
+                {
+                    "status": "failed",
+                    "message": str(e),
+                },
+                status=400,
+            )
+    else:
+        return JsonResponse(
+            {
+                "status": False,
+                "message": "Invalid request method.",
+            },
+            status=400,
+        )
+
+
+@csrf_exempt
+def create_mouse_api(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            name = data["name"]
+            price = data["price"]
+            description = data["description"]
+            stock = data["stock"]
+            dpi = data["dpi"]
+            weight = data["weight"]
+            brand = data["brand"]
+            image = data["image"]
+            author = request.user
+
+            if price < 0:
+                raise Exception("Price must be greater than 0.")
+
+            if stock < 0:
+                raise Exception("Stock must be greater than 0.")
+
+            mouse = Mouse.objects.create(
+                name=name,
+                price=price,
+                description=description,
+                stock=stock,
+                dpi=dpi,
+                weight=weight,
+                brand=brand,
+                image=image,
+                author=author,
+            )
+
+            if mouse is None:
+                raise Exception("Failed to create mouse.")
+
+            mouse.save()
+
+            return JsonResponse(
+                {
+                    "status": "success",
+                    "message": "Mouse has been created successfully!",
+                },
+                status=201,
+            )
+        except Exception as e:
+            return JsonResponse(
+                {
+                    "status": "failed",
+                    "message": str(e),
+                },
+                status=400,
+            )
+    else:
+        return JsonResponse(
+            {
+                "status": False,
+                "message": "Invalid request method.",
+            },
+            status=400,
+        )

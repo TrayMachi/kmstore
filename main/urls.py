@@ -53,6 +53,6 @@ urlpatterns = [
     path("edit/mouse/<str:id>/", edit_mouse, name="edit_mouse"),
     path("create-keyboard-ajax", create_keyboard_ajax, name="create_keyboard_ajax"),
     path("create-mouse-ajax", create_mouse_ajax, name="create_mouse_ajax"),
-    path("/create-keyboard/", create_keyboard_api, name="create_keyboard_api"),
-    path("/create-mouse/", create_mouse_api, name="create_mouse_api"),
+    path("create-keyboard/", create_keyboard_api, name="create_keyboard_api"),
+    path("create-mouse/", create_mouse_api, name="create_mouse_api"),
 ]

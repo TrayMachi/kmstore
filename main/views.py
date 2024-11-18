@@ -329,7 +329,7 @@ def create_mouse_api(request):
             description = data["description"]
             stock = int(data["stock"])
             dpi = int(data["dpi"])
-            weight = data["weight"]
+            weight = int(data["weight"])
             brand = data["brand"]
             image = data["image"]
             author = request.user

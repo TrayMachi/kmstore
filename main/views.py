@@ -264,9 +264,9 @@ def create_keyboard_api(request):
         try:
             data = json.loads(request.body)
             name = data["name"]
-            price = data["price"]
+            price = int(data["price"])
             description = data["description"]
-            stock = data["stock"]
+            stock = int(data["stock"])
             switch = data["switch"]
             brand = data["brand"]
             image = data["image"]
@@ -325,10 +325,10 @@ def create_mouse_api(request):
         try:
             data = json.loads(request.body)
             name = data["name"]
-            price = data["price"]
+            price = int(data["price"])
             description = data["description"]
-            stock = data["stock"]
-            dpi = data["dpi"]
+            stock = int(data["stock"])
+            dpi = int(data["dpi"])
             weight = data["weight"]
             brand = data["brand"]
             image = data["image"]

@@ -209,7 +209,6 @@ def show_json_by_id_mouse(request, id):
     )
 
 
-@login_required(login_url="/login")
 def show_json_by_author(request):
     keyboard_listings = Keyboard.objects.filter(author=request.user)
     mouse_listings = Mouse.objects.filter(author=request.user)

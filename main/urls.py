@@ -23,6 +23,7 @@ from main.views import (
     create_mouse_ajax,
     create_keyboard_api,
     create_mouse_api,
+    show_products_by_author_id
 )
 
 app_name = "main"
@@ -55,4 +56,5 @@ urlpatterns = [
     path("create-mouse-ajax", create_mouse_ajax, name="create_mouse_ajax"),
     path("create-keyboard/", create_keyboard_api, name="create_keyboard_api"),
     path("create-mouse/", create_mouse_api, name="create_mouse_api"),
+    path("products/<str:id>/", show_products_by_author_id, name="show_products_by_author_id"),
 ]

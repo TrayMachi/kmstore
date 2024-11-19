@@ -217,6 +217,13 @@ def show_json_by_author(request):
         serializers.serialize("json", data), content_type="application/json"
     )
 
+def show_products_by_author_id(request, id):
+    keyboard_listings = Keyboard.objects.filter(author=id)
+    mouse_listings = Mouse.objects.filter(author=id)
+    data = list(chain(keyboard_listings, mouse_listings))
+    return HttpResponse(
+        serializers.serialize("json", data), content_type="application/json"
+    )
 
 @login_required(login_url="/login")
 def delete_keyboard(request, id):
